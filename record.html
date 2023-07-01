@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fish Species Records</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fish Species Records</h1>
+
+    <table id="fishRecords">
+        <thead>
+            <tr>
+                <th>Species</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Records will be dynamically added here -->
+        </tbody>
+    </table>
+
+    <script>
+        function loadRecords() {
+            var fishData = JSON.parse(localStorage.getItem('fishData'));
+            if (fishData) {
+                var recordsTable = document.getElementById('fishRecords');
+                var tbody = recordsTable.getElementsByTagName('tbody')[0];
+
+                // Clear existing records
+                tbody.innerHTML = '';
+
+                // Display the latest 5 records
+                var startIndex = Math.max(0, fishData.length - 5);
+                var endIndex = fishData.length;
+                for (var i = startIndex; i < endIndex; i++) {
+                    var row = document.createElement('tr');
+                    var speciesCell = document.createElement('td');
+                    var countCell = document.createElement('td');
+                    speciesCell.textContent = fishData[i].species;
+                    countCell.textContent = fishData[i].count;
+                    row.appendChild(speciesCell);
+                    row.appendChild(countCell);
+                    tbody.appendChild(row);
+                }
+            }
+        }
+
+        // Load records when the page is loaded
+        document.addEventListener('DOMContentLoaded', loadRecords);
+    </script>
+</body>
+</html>

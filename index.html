@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fish Species</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fish Species</h1>
+
+    <table id="fishTable">
+        <thead>
+            <tr>
+                <th>Species</th>
+                <th>Count</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>GoldFish</td>
+                <td id="gfCount">0</td>
+                <td>
+                    <button onclick="incrementCount('gfCount')">+</button>
+                    <button onclick="decrementCount('gfCount')">-</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Neon Tetra</td>
+                <td id="ntCount">0</td>
+                <td>
+                    <button onclick="incrementCount('ntCount')">+</button>
+                    <button onclick="decrementCount('ntCount')">-</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Molly</td>
+                <td id="mCount">0</td>
+                <td>
+                    <button onclick="incrementCount('mCount')">+</button>
+                    <button onclick="decrementCount('mCount')">-</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Betta</td>
+                <td id="bCount">0</td>
+                <td>
+                    <button onclick="incrementCount('bCount')">+</button>
+                    <button onclick="decrementCount('bCount')">-</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Cichlids</td>
+                <td id="cCount">0</td>
+                <td>
+                    <button onclick="incrementCount('cCount')">+</button>
+                    <button onclick="decrementCount('cCount')">-</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button onclick="saveData()">Save Record</button>
+
+    <script>
+        function incrementCount(countId) {
+            var countCell = document.getElementById(countId);
+            var count = parseInt(countCell.innerText);
+            count++;
+            countCell.innerText = count.toString();
+        }
+
+        function decrementCount(countId) {
+            var countCell = document.getElementById(countId);
+            var count = parseInt(countCell.innerText);
+            if (count > 0) {
+                count--;
+                countCell.innerText = count.toString();
+            }
+        }
+
+        function saveData() {
+            var tableData = [];
+            var fishTable = document.getElementById('fishTable');
+            var rows = fishTable.getElementsByTagName('tr');
+            for (var i = 1; i < rows.length; i++) {
+                var species = rows[i].cells[0].innerText;
+                var count = rows[i].cells[1].innerText;
+                tableData.push({ species: species, count: count });
+            }
+            localStorage.setItem('fishData', JSON.stringify(tableData));
+         window.location.href = "record.html";
+        }
+    </script>
+</body>
+</html>
